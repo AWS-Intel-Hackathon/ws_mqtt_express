@@ -19,7 +19,24 @@
 
     socket.on('data', function(data) {
         console.log(data);
-        $('#incoming').text(data);
+        dataIn = data.toString();
+	fldCode = dataIn.substring(0,1);
+	msgData = dataIn.substring(1);
+	if (fldCode == 'T') {
+          $('#ctlTime').text(msgData);
+	} else if (fldCode == 'C') {
+          $('#ctlTemp').text(msgData);
+	} else if (fldCode == 'A') {
+          $('#ctlAc').text(msgData);
+	} else if (fldCode == 'H') {
+          $('#ctlHeater').text(msgData);
+	} else if (fldCode == 'L') {
+          $('#ctlLights').text(msgData);
+	} else if (fldCode == 'S') {
+          $('#ctlStove').text(msgData);
+	} else {
+          $('#ctlXXX').text(dataIn);
+	};
     }); socket.on('error', function() {
         console.error(arguments)
     }); 
@@ -28,7 +45,15 @@
 </head>
 
 <body>
-    <h1 id="incoming"></h1>
+    <table>
+      <tr><td>Time:</td><td><span id="ctlTime"></span></td></tr>
+      <tr><td>Outside Temp:</td><td><span id="ctlTemp"></span></td></tr>
+      <tr><td>Heater:</td><td><span id="ctlHeater"></span></td></tr>
+      <tr><td>Air Conditioning:</td><td><span id="ctlAc"></span></td></tr>
+      <tr><td>Lights:</td><td><span id="ctlLights"></span></td></tr>
+      <tr><td>Stove:</td><td><span id="ctlStove"></span></td></tr>
+      <tr><td>Unknown:</td><td><span id="ctlXXX"></span></td></tr>
+    </table>
 
     <a class="waves-effect waves-light btn-large" id="target">Button</a>
 
